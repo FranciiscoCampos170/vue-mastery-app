@@ -31,9 +31,7 @@ Vue.component('product', {
                 :class="{ disabledButton: !inStock}" >
         Add to Cart </button>
 
-        <div class = "cart" >
-        <p> Cart({{cart}}) </p> 
-        </div>
+      
 
         </div>
         </div>
@@ -43,7 +41,7 @@ Vue.component('product', {
             product: 'Socks',
             selectedVariant: 0,
             details: ["80% cotton", "20% polyester", "Gender-neutral"],
-            cart: 0,
+            
             variants: [
                 {
                     variantId: 2234,
@@ -63,7 +61,7 @@ Vue.component('product', {
     },
     methods: {
         addToCart() {
-            this.cart += 1
+            this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId)
         },
         updateProduct(index) {
             this.selectedVariant = index
@@ -89,6 +87,12 @@ Vue.component('product', {
 var app = new Vue({
     el: '#app',
     data: {
-        premium: false
+        premium: false,
+        cart: [],
+    },
+    methods: {
+        updateCart(id) {
+            this.cart.push(id)
+        }
     }
 });
